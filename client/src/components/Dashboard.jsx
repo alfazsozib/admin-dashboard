@@ -31,13 +31,13 @@ function Dashboard() {
 
   const sendData = async () => {
     const randomPassword = generateRandomPassword(42);
-    const sendData = await axios.post("http://localhost:8080/send-data", { name: values.name, date: values.date, password: randomPassword });
+    const sendData = await axios.post("http://149.28.238.50:8080/send-data", { name: values.name, date: values.date, password: randomPassword });
     console.log(sendData)
 
   }
 
   const getData = async () => {
-    const data = await axios.get("http://localhost:8080/get-data")
+    const data = await axios.get("http://149.28.238.50:8080/get-data")
     setData(data.data)
     console.log(data)
 
@@ -45,7 +45,7 @@ function Dashboard() {
 
   const deleteData = async (item) => {
     try {
-      const res = await axios.post("http://localhost:8080/remove-data", { id: item._id });
+      const res = await axios.post("http://149.28.238.50:8080/remove-data", { id: item._id });
       console.log(res);
     } catch (error) {
       console.error(error);
