@@ -4,7 +4,6 @@ import axios from 'axios';
 function Dashboard() {
   const [values, setValues] = useState()
   const [alldata, setData] = useState(null)
-  // const [randomPass, setRandomPass] = useState()
   const valueHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -54,9 +53,9 @@ function Dashboard() {
 
   }
 
-  useEffect(() => {
-    getData()
-  }, [])
+  // useEffect(() => {
+  //   getData()
+  // }, [])
   useEffect(()=>{
     getData()
   },[sendData,deleteData])

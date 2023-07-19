@@ -60,11 +60,10 @@ app.post('/remove-data',async(req,res)=>{
 
 app.get('/query-data', async(req, res) => {
   const password = req.query.key
+  const name = req.query.name
   console.log(password,"Key")
- 
   const dateNow = new Date()
-  console.log(dateNow)
-  const findData = await AuthModel.findOne({password})
+  const findData = await AuthModel.findOne({password,name})
   if (findData){
       const date = findData.date
       if (date>dateNow){
@@ -72,7 +71,9 @@ app.get('/query-data', async(req, res) => {
       } 
       else res.json({message:"False"})
   }
-  res.json({message: findData})
+  else{
+    res.json({message: findData})
+  }
 });
 
 
