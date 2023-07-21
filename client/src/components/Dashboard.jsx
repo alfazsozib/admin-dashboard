@@ -4,6 +4,9 @@ import axios from 'axios';
 function Dashboard() {
   const [values, setValues] = useState()
   const [alldata, setData] = useState(null)
+  const [file, setFile] = useState()
+  
+
   const valueHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -31,13 +34,14 @@ function Dashboard() {
 
   const sendData = async () => {
     const randomPassword = generateRandomPassword(42);
-    const sendData = await axios.post("http://149.28.238.50:8080/send-data", { name: values.name, date: values.date, password: randomPassword });
+    const sendData = await axios.post("http://localhost:8080/send-data", { name: values.name, date: values.date, password: randomPassword });
     console.log(sendData)
+    getData()
 
   }
 
   const getData = async () => {
-    const data = await axios.get("http://149.28.238.50:8080/get-data")
+    const data = await axios.get("http://localhost:8080/get-data")
     setData(data.data)
     console.log(data)
 
@@ -45,20 +49,38 @@ function Dashboard() {
 
   const deleteData = async (item) => {
     try {
-      const res = await axios.post("http://149.28.238.50:8080/remove-data", { id: item._id });
+      const res = await axios.post("http://localhost:8080/remove-data", { id: item._id });
       console.log(res);
     } catch (error) {
       console.error(error);
     }
-
+    getData()
   }
 
-  // useEffect(() => {
-  //   getData()
-  // }, [])
-  useEffect(()=>{
+  const handleJson = (event) => {
+    const name = event.target.name
+    setFile({ ...file, [name]: event.target.files[0] });
+}
+
+const postJsonData = async (event) => {
+
+  const formData = new FormData();
+  formData.append("json", file.json);
+  
+  console.log(formData)
+  try {
+      const data = await axios.post("http://localhost:8080/save", formData);
+  } catch (error) {
+      console.log(error);
+  }
+  // window.location.href = "http://45.32.1.54:3000/"
+
+}
+
+
+  useEffect(() => {
     getData()
-  },[sendData,deleteData])
+  }, [])
 
   return (
     <div className=''>
@@ -69,6 +91,7 @@ function Dashboard() {
           </h1>
         </div>
         <div className='flex flex-col gap-10 mt-12'>
+          <div className='flex justify-between'>
           <div className='p-10'>
             <div className='flex gap-6'>
               <div className='flex flex-col gap-2'>
@@ -81,6 +104,18 @@ function Dashboard() {
               </div>
             </div>
             <button onClick={sendData} className='bg-[#000000] text-white font-bold px-6 py-2 rounded-lg mt-6'>Submit</button>
+          </div>
+
+          <div className='p-10'>
+            <div className='flex gap-6'>
+              <div className='flex flex-col gap-2'>
+                <label htmlFor="name" className='text-white text-lg font-semibold'>Upload Json</label>
+                <input type="file" onChange={handleJson} name='json' className='px-4 text-black' />
+              </div>
+            </div>
+            <button onClick={postJsonData} className='bg-[#000000] text-white font-bold px-6 py-2 rounded-lg mt-6'>Submit</button>
+          </div>
+
           </div>
 
           <div className='edit--section w-[100%]'>
