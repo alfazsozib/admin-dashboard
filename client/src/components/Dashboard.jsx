@@ -1,10 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import {Modal} from "antd"
+
 
 function Dashboard() {
-  const [values, setValues] = useState()
+  const initialValue ={
+    name:'',
+    date:''
+  }
+  const [values, setValues] = useState(initialValue)
   const [alldata, setData] = useState(null)
   const [file, setFile] = useState()
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+    getData()
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   
 
   const valueHandler = (event) => {
@@ -34,14 +54,14 @@ function Dashboard() {
 
   const sendData = async () => {
     const randomPassword = generateRandomPassword(42);
-    const sendData = await axios.post("http://149.28.238.50:8080/send-data", { name: values.name, date: values.date, password: randomPassword });
-    console.log(sendData)
+    const sendData = await axios.post("http://localhost:8080/send-data", { name: values.name, date: values.date, password: randomPassword });
     getData()
+    setValues(initialValue)
 
   }
 
   const getData = async () => {
-    const data = await axios.get("http://149.28.238.50:8080/get-data")
+    const data = await axios.get("http://localhost:8080/get-data")
     setData(data.data)
     console.log(data)
 
@@ -49,13 +69,28 @@ function Dashboard() {
 
   const deleteData = async (item) => {
     try {
-      const res = await axios.post("http://149.28.238.50:8080/remove-data", { id: item._id });
+      const res = await axios.post("http://localhost:8080/remove-data", { id: item._id });
       console.log(res);
     } catch (error) {
       console.error(error);
     }
     getData()
   }
+
+
+  
+  const editData = async (item) => {
+    try {
+      const res = await axios.post("http://localhost:8080/edit-data", { id: item._id, name: values.name, date: values.date});
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+
+    setValues(initialValue)
+  }
+
+
 
   const handleJson = (event) => {
     const name = event.target.name
@@ -69,7 +104,7 @@ const postJsonData = async (event) => {
   
   console.log(formData)
   try {
-      const data = await axios.post("http://149.28.238.50:8080/save", formData);
+      const data = await axios.post("http://localhost:8080/save", formData);
   } catch (error) {
       console.log(error);
   }
@@ -117,11 +152,38 @@ const postJsonData = async (event) => {
           </div>
 
           </div>
-
+          
           <div className='edit--section w-[100%]'>
             <div className='w-[100%] h-80  p-6'>
               <div className='bg-[#141313af]  flex flex-col gap-2 p-4 rounded-lg' >
                 {alldata ? alldata.map((item) =>
+                <>
+                    <Modal
+                    title="Edit Data And Save"
+                    open={isModalOpen}
+                    onOk={handleOk}
+                    onCancel={handleCancel}
+                    okButtonProps={{ disabled: false, danger:true }}
+                    cancelButtonProps={{ disabled: false }}
+                    bodyStyle={{backgroundColor: "#0F464F"}}
+                  
+                  >
+                    <div className='p-10'>
+                        <div className='flex gap-6'>
+                          <div className='flex flex-col gap-2'>
+                            <label htmlFor="name" className='text-white text-lg font-semibold'>Name</label>
+                            <input type="text" onChange={valueHandler} name='name' className='px-4 text-black' />
+                          </div>
+                          <div className='flex flex-col gap-2'>
+                            <label htmlFor="date" className='text-white text-lg font-semibold'>Date</label>
+                            <input type="date" onChange={valueHandler} name='date' className='px-4 text-black' />
+                          </div>
+                        </div>
+                        <button onClick={()=>editData(item)} className='bg-[#000000] text-white font-bold px-6 py-2 rounded-lg mt-6'>Submit</button>
+                      </div>
+                  </Modal>
+            
+                
                   <div id='data--section' className='flex items-center border-b-[1px] border-yellow-600 justify-between text-white'>
                     <div>
 
@@ -133,12 +195,13 @@ const postJsonData = async (event) => {
                     </div>
                     <div>
                       <h3>{item.password}</h3>
-                      {/* <h3>{`${item?.password.slice(0,9)}...${item?.password.slice(45,56)}`}</h3> */}
                     </div>
                     <div className=''>
+                      <button onClick={() => { showModal() }} className='rounded-lg hover:bg-yellow-500 hover:text-white font-semibold px-4'>Edit</button>
                       <button onClick={() => { deleteData(item) }} className='rounded-lg hover:bg-red-700 hover:text-white font-semibold px-4'>Delete</button>
                     </div>
                   </div>
+                  </>
                 ) : null}
               </div>
             </div>

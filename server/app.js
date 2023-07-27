@@ -68,12 +68,28 @@ app.get("/get-data", async (req, res) => {
 
 
 app.post('/remove-data', async (req, res) => {
+  console.log(req)
   const resultToDelete = req.body.id
   if (resultToDelete) await AuthModel.findByIdAndDelete(resultToDelete)
   try {
     res.send("success");
   } catch (e) { res.send(e) }
   console.log("Deleted")
+})
+
+
+app.post('/edit-data', async (req, res) => {
+  const resultToUpdate = req.body.id
+
+  const name = req.body.name
+  const date  = req.body.date
+  console.log(resultToUpdate,name, date)
+  if (resultToUpdate) await AuthModel.findByIdAndUpdate(resultToUpdate,{
+    name,
+    date
+  })
+
+  res.json("ok");
 })
 
 
@@ -138,6 +154,7 @@ app.post("/save", dataUpload, async (req, res) => {
   res.send("ok")
 
 })
+
 
 
 app.listen(port, () => {
