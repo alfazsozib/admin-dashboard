@@ -54,14 +54,14 @@ function Dashboard() {
 
   const sendData = async () => {
     const randomPassword = generateRandomPassword(42);
-    const sendData = await axios.post("http://localhost:8080/send-data", { name: values.name, date: values.date, password: randomPassword });
+    const sendData = await axios.post("http://149.28.238.50:8080/send-data", { name: values.name, date: values.date, password: randomPassword });
     getData()
     setValues(initialValue)
 
   }
 
   const getData = async () => {
-    const data = await axios.get("http://localhost:8080/get-data")
+    const data = await axios.get("http://149.28.238.50:8080/get-data")
     setData(data.data)
     console.log(data)
 
@@ -69,7 +69,7 @@ function Dashboard() {
 
   const deleteData = async (item) => {
     try {
-      const res = await axios.post("http://localhost:8080/remove-data", { id: item._id });
+      const res = await axios.post("http://149.28.238.50:8080/remove-data", { id: item._id });
       console.log(res);
     } catch (error) {
       console.error(error);
@@ -78,10 +78,10 @@ function Dashboard() {
   }
 
 
-  
+
   const editData = async (item) => {
     try {
-      const res = await axios.post("http://localhost:8080/edit-data", { id: item._id, name: values.name, date: values.date});
+      const res = await axios.post("http://149.28.238.50:8080/edit-data", { id: item._id, name: values.name, date: values.date});
       console.log(res);
     } catch (error) {
       console.error(error);
@@ -104,7 +104,7 @@ const postJsonData = async (event) => {
   
   console.log(formData)
   try {
-      const data = await axios.post("http://localhost:8080/save", formData);
+      const data = await axios.post("http://149.28.238.50:8080/save", formData);
   } catch (error) {
       console.log(error);
   }
