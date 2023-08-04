@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import {Modal} from "antd"
-
+// import { ToastContainer, toast } from "react-toastify";
+import toast, { Toaster } from 'react-hot-toast';
 
 function Dashboard() {
   const initialValue ={
@@ -33,6 +34,7 @@ function Dashboard() {
     setValues({ ...values, [name]: value })
   }
 
+
   function generateRandomPassword(length) {
     const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let password = '';
@@ -51,11 +53,16 @@ function Dashboard() {
   }
 
 
-
   const sendData = async () => {
     const randomPassword = generateRandomPassword(42);
-    const sendData = await axios.post("http://149.28.238.50:8080/send-data", { name: values.name, date: values.date, password: randomPassword });
+    const sendData = await axios.post("http://localhost:8080/send-data", { name: values.name, date: values.date, password: randomPassword, email:values.email });
     getData()
+    if (sendData) {
+      toast.success("Email Send");
+    }else{
+      toast.error("Not Saved")
+    } 
+    
     setValues(initialValue)
 
   }
@@ -97,21 +104,31 @@ function Dashboard() {
     setFile({ ...file, [name]: event.target.files[0] });
 }
 
-const postJsonData = async (event) => {
+const postJson1Data = async () => {
 
   const formData = new FormData();
-  formData.append("json", file.json);
-  
+  formData.append("json1", file.json1);
   console.log(formData)
   try {
-      const data = await axios.post("http://149.28.238.50:8080/save", formData);
+      const data = await axios.post("http://localhost:8080/save-1", formData);
+
   } catch (error) {
       console.log(error);
   }
-  // window.location.href = "http://45.32.1.54:3000/"
-
 }
 
+const postJson2Data = async()=>{
+  const formData = new FormData();
+  formData.append("json2", file.json2);
+  console.log(formData)
+  try {
+      const data = await axios.post("http://localhost:8080/save-2", formData);
+  } catch (error) {
+      console.log(error);
+  }
+
+}
+ 
 
   useEffect(() => {
     getData()
@@ -119,6 +136,16 @@ const postJsonData = async (event) => {
 
   return (
     <div className=''>
+      {/* <ToastContainer
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          draggable
+          theme="dark"
+      /> */}
+      <Toaster/>
       <div className='erroPage bg-cyan-500'>
         <div>
           <h1 className='font-extrabold text-6xl text-white'>
@@ -137,19 +164,37 @@ const postJsonData = async (event) => {
                 <label htmlFor="date" className='text-white text-lg font-semibold'>Date</label>
                 <input type="date" onChange={valueHandler} name='date' className='px-4 text-black' />
               </div>
+              
             </div>
+            <div className='flex flex-col gap-2'>
+                <label htmlFor="date" className='text-white text-lg font-semibold'>Email</label>
+                <input type="email" onChange={valueHandler} name='email' placeholder='example@gmail.com' className='px-4 text-black' />
+              </div>
             <button onClick={sendData} className='bg-[#000000] text-white font-bold px-6 py-2 rounded-lg mt-6'>Submit</button>
           </div>
 
-          <div className='p-10'>
-            <div className='flex gap-6'>
-              <div className='flex flex-col gap-2'>
-                <label htmlFor="name" className='text-white text-lg font-semibold'>Upload Json</label>
-                <input type="file" onChange={handleJson} name='json' className='px-4 text-black' />
+          <div className='flex'>
+              <div className=''>
+                <div className='flex gap-2'>
+                  <div className='flex flex-col gap-2'>
+                    <label htmlFor="name" className='text-white text-lg font-semibold'>Upload Json-1</label>
+                    <input type="file" onChange={handleJson} name='json1' className='px-4 text-black' />
+                  </div>
+                </div>
+                <button onClick={postJson1Data} className='bg-[#000000] text-white font-bold px-2 py-1 rounded-lg mt-6'>Submit</button>
               </div>
-            </div>
-            <button onClick={postJsonData} className='bg-[#000000] text-white font-bold px-6 py-2 rounded-lg mt-6'>Submit</button>
+              
+              <div className=''>
+                <div className='flex gap-6'>
+                  <div className='flex flex-col gap-2'>
+                    <label htmlFor="name" className='text-white text-lg font-semibold'>Upload Json-2</label>
+                    <input type="file" onChange={handleJson} name='json2' className='px-4 text-black' />
+                  </div>
+                </div>
+                <button onClick={postJson2Data} className='bg-[#000000] text-white font-bold px-2 py-1 rounded-lg mt-6'>Submit</button>
+              </div>
           </div>
+         
 
           </div>
           

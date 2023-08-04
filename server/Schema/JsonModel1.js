@@ -9,6 +9,6 @@ const mongooseSchema = new Schema({
 
 });
 
-const JsonModel = mongoose.model('JsonModel', mongooseSchema);
+const JsonModel1 = mongoose.model('JsonModel1', mongooseSchema);
+module.exports = JsonModel1;
 
-module.exports = JsonModel;

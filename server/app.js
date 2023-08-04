@@ -1,5 +1,6 @@
 const AuthModel = require('./Schema/Model');
-const JsonModel = require('./Schema/JsonModel');
+const JsonModel1 = require('./Schema/JsonModel1');
+const JsonModel2  = require("./Schema/JsonModel2");
 const express = require('express');
 const cors = require("cors")
 const mongoose = require('mongoose');
@@ -7,7 +8,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 const multer = require("multer")
-
+const transporter = require('./utils/mailer')
 
 
 
@@ -42,19 +43,48 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage: storage });
-const dataUpload = upload.fields([{ name: 'json', maxCount: 1 }])
+const dataUpload = upload.fields([{ name: 'json1', maxCount: 1 },{ name: 'json2', maxCount: 1 }])
 
 
 app.post('/send-data', async (req, res) => {
-  let { name, password, date } = req.body
-  console.log(name, password, date)
-  date = new Date(date)
+  let { name, password,date ,email } = req.body
+  console.log(name, password, email)
+  // const  date = new Date(date)
   const saveData = new AuthModel({
     name,
     password,
     date
   })
   saveData.save()
+
+  if (email){
+  await transporter.sendMail({
+    from: '"Test Mail From Admin " <testavaliable0@gmail.com>',
+    to: email,
+    subject: "Test Mail From Admin",
+    html: `
+      <p> Hey there,</p>
+      
+        <p>Thanks for signing up! We're thrilled to have you on board.</p>
+      
+        <div>
+          <p>
+          But before we get started, we need to make sure your email address is legit. It's an important step to keep your
+          account secure and to ensure you don't miss out on any exciting updates or promotions.
+          </p>
+          
+      
+
+        <p>Thanks for your cooperation!</p>
+        <br>
+        </div>
+
+        Best,
+        <br>
+        ------
+    `,
+  })
+}
   res.json({ message: "OK" })
 })
 
@@ -116,21 +146,28 @@ app.get('/query-data', async (req, res) => {
 
 
 
-app.get("/view-json", async (req, res) => {
-  const viewJson = await JsonModel.findById("64bafe107e6fceff0f33b5f3")
+app.get("/view-json-1", async (req, res) => {
+  const viewJson = await JsonModel1.findById("64cd3b6b2b5b34b77620db10")
   if (viewJson) {
     const dataURI = JSON.stringify(viewJson.jsonFile, null, 2);
-    // Extract the base64 data from the data URI
     const base64Data = dataURI.split(",")[1];
     const jsonData = Buffer.from(base64Data, "base64").toString("utf-8");
-
-    // Parse the JSON data
     const parsedData = JSON.parse(jsonData);
-
-    // Save the parsed data to a file (optional)
     fs.writeFileSync("parsed_data.json", JSON.stringify(parsedData, null, 2));
+    res.json(parsedData);
+  } else {
+    res.status(404).send("JSON data not found.");
+  }
+})
 
-    // Send the JSON data as a response (optional)
+app.get("/view-json-2", async (req, res) => {
+  const viewJson = await JsonModel2.findById("64cd3a6dad7ca683f8ee265d")
+  if (viewJson) {
+    const dataURI = JSON.stringify(viewJson.jsonFile, null, 2);
+    const base64Data = dataURI.split(",")[1];
+    const jsonData = Buffer.from(base64Data, "base64").toString("utf-8");
+    const parsedData = JSON.parse(jsonData);
+    fs.writeFileSync("parsed_data.json", JSON.stringify(parsedData, null, 2));
     res.json(parsedData);
   } else {
     res.status(404).send("JSON data not found.");
@@ -139,21 +176,70 @@ app.get("/view-json", async (req, res) => {
 
 
 // save json file 
-app.post("/save", dataUpload, async (req, res) => {
+app.post("/save-1", dataUpload, async (req, res) => {
 
-  const json = req.files['json'][0]
+  const json = req.files['json1'][0]
   const jsonFileBuffer = fs.readFileSync(json.path)
   const base64Json = jsonFileBuffer.toString('base64')
 
-  await JsonModel.findByIdAndUpdate("64bafe107e6fceff0f33b5f3", {
+  await JsonModel1.findByIdAndUpdate("64cd3b6b2b5b34b77620db10", {
     jsonFile: `data:${json.mimetype};base64,${base64Json}`,
 
   });
-  // saveData.save
   console.log("Inserted")
   res.send("ok")
 
 })
+
+
+
+app.post("/save-2", dataUpload, async (req, res) => {
+
+  const json = req.files['json2'][0]
+  const jsonFileBuffer = fs.readFileSync(json.path)
+  const base64Json = jsonFileBuffer.toString('base64')
+
+  await JsonModel2.findByIdAndUpdate("64cd3a6dad7ca683f8ee265d", {
+    jsonFile: `data:${json.mimetype};base64,${base64Json}`,
+
+  });
+  console.log("Inserted")
+  res.send("ok")
+
+})
+
+
+app.post('/send-mail', async(req, res) => {
+  const { email } = req.body
+  await transporter.sendMail({
+    from: '"Test Mail From Admin " <testavaliable0@gmail.com>',
+    to: email,
+    subject: "Test Mail From Admin",
+    html: `
+      <p> Hey there,</p>
+      
+        <p>Thanks for signing up! We're thrilled to have you on board.</p>
+      
+        <div>
+          <p>
+          But before we get started, we need to make sure your email address is legit. It's an important step to keep your
+          account secure and to ensure you don't miss out on any exciting updates or promotions.
+          </p>
+          
+      
+
+        <p>Thanks for your cooperation!</p>
+        <br>
+        </div>
+
+        Best,
+        <br>
+        ------
+    `,
+  })
+  
+});
+
 
 
 
