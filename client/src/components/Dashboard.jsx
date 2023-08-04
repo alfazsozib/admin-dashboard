@@ -55,7 +55,7 @@ function Dashboard() {
 
   const sendData = async () => {
     const randomPassword = generateRandomPassword(42);
-    const sendData = await axios.post("http://localhost:8080/send-data", { name: values.name, date: values.date, password: randomPassword, email:values.email });
+    const sendData = await axios.post("http://149.28.238.50:8080/send-data", { name: values.name, date: values.date, password: randomPassword, email:values.email });
     getData()
     if (sendData) {
       toast.success("Email Send");
@@ -110,7 +110,7 @@ const postJson1Data = async () => {
   formData.append("json1", file.json1);
   console.log(formData)
   try {
-      const data = await axios.post("http://localhost:8080/save-1", formData);
+      const data = await axios.post("http://149.28.238.50:8080/save-1", formData);
 
   } catch (error) {
       console.log(error);
@@ -122,7 +122,7 @@ const postJson2Data = async()=>{
   formData.append("json2", file.json2);
   console.log(formData)
   try {
-      const data = await axios.post("http://localhost:8080/save-2", formData);
+      const data = await axios.post("http://149.28.238.50:8080/save-2", formData);
   } catch (error) {
       console.log(error);
   }
@@ -136,15 +136,6 @@ const postJson2Data = async()=>{
 
   return (
     <div className=''>
-      {/* <ToastContainer
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          draggable
-          theme="dark"
-      /> */}
       <Toaster/>
       <div className='erroPage bg-cyan-500'>
         <div>
