@@ -128,6 +128,18 @@ const postJson2Data = async()=>{
   }
 
 }
+
+const postJson3Data = async()=>{
+  const formData = new FormData();
+  formData.append("json3", file.json3);
+  console.log(formData)
+  try {
+      const data = await axios.post("http://localhost:8080/save-3", formData);
+  } catch (error) {
+      console.log(error);
+  }
+
+}
  
 
   useEffect(() => {
@@ -144,7 +156,7 @@ const postJson2Data = async()=>{
           </h1>
         </div>
         <div className='flex flex-col gap-10 mt-12'>
-          <div className='flex justify-between'>
+          <div className='flex'>
           <div className='p-10'>
             <div className='flex gap-6'>
               <div className='flex flex-col gap-2'>
@@ -157,6 +169,7 @@ const postJson2Data = async()=>{
               </div>
               
             </div>
+
             <div className='flex flex-col gap-2'>
                 <label htmlFor="date" className='text-white text-lg font-semibold'>Email</label>
                 <input type="email" onChange={valueHandler} name='email' placeholder='example@gmail.com' className='px-4 text-black' />
@@ -164,29 +177,37 @@ const postJson2Data = async()=>{
             <button onClick={sendData} className='bg-[#000000] text-white font-bold px-6 py-2 rounded-lg mt-6'>Submit</button>
           </div>
 
-          <div className='flex'>
-              <div className=''>
-                <div className='flex gap-2'>
+          <div className=''>
+
+          <div className=''>
+                <div className='flex'>
                   <div className='flex flex-col gap-2'>
                     <label htmlFor="name" className='text-white text-lg font-semibold'>Upload Json-1</label>
-                    <input type="file" onChange={handleJson} name='json1' className='px-4 text-black' />
+                    <input type="file" onChange={handleJson} name='json1' className='text-black' />
                   </div>
+                  <button onClick={postJson1Data} className='bg-[#000000] text-white font-bold px-2 py-1 rounded-lg mt-6'>Submit</button>
                 </div>
-                <button onClick={postJson1Data} className='bg-[#000000] text-white font-bold px-2 py-1 rounded-lg mt-6'>Submit</button>
               </div>
               
               <div className=''>
-                <div className='flex gap-6'>
+                <div className='flex'>
                   <div className='flex flex-col gap-2'>
                     <label htmlFor="name" className='text-white text-lg font-semibold'>Upload Json-2</label>
-                    <input type="file" onChange={handleJson} name='json2' className='px-4 text-black' />
+                    <input type="file" onChange={handleJson} name='json2' className=' text-black' />
                   </div>
+                  <button onClick={postJson2Data} className='bg-[#000000] text-white font-bold px-2 py-1 rounded-lg mt-6'>Submit</button>
                 </div>
-                <button onClick={postJson2Data} className='bg-[#000000] text-white font-bold px-2 py-1 rounded-lg mt-6'>Submit</button>
+              </div>
+              <div className=''>
+                <div className='flex'>
+                  <div className='flex flex-col gap-2'>
+                    <label htmlFor="name" className='text-white text-lg font-semibold'>Upload Json-3</label>
+                    <input type="file" onChange={handleJson} name='json3' className=' text-black' />
+                  </div>
+                  <button onClick={postJson3Data} className='bg-[#000000] text-white font-bold px-2 py-1 rounded-lg mt-6'>Submit</button>
+                </div>
               </div>
           </div>
-         
-
           </div>
           
           <div className='edit--section w-[100%]'>
