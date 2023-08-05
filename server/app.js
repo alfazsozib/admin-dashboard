@@ -1,7 +1,7 @@
 const AuthModel = require('./Schema/Model');
 const JsonModel1 = require('./Schema/JsonModel1');
-const JsonModel2  = require("./Schema/JsonModel2");
-const JsonModel3  = require("./Schema/JsonModel3");
+const JsonModel2 = require("./Schema/JsonModel2");
+const JsonModel3 = require("./Schema/JsonModel3");
 const express = require('express');
 const cors = require("cors")
 const mongoose = require('mongoose');
@@ -44,11 +44,11 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage: storage });
-const dataUpload = upload.fields([{ name: 'json1', maxCount: 1 },{ name: 'json2', maxCount: 1 },{ name: 'json3', maxCount: 1 }])
+const dataUpload = upload.fields([{ name: 'json1', maxCount: 1 }, { name: 'json2', maxCount: 1 }, { name: 'json3', maxCount: 1 }])
 
 
 app.post('/send-data', async (req, res) => {
-  let { name, password,date ,email } = req.body
+  let { name, password, date, email } = req.body
   console.log(name, password, email)
   // const  date = new Date(date)
   const saveData = new AuthModel({
@@ -58,12 +58,12 @@ app.post('/send-data', async (req, res) => {
   })
   saveData.save()
 
-  if (email){
-  await transporter.sendMail({
-    from: '"Test Mail From Admin " <testavaliable0@gmail.com>',
-    to: email,
-    subject: "Test Mail From Admin",
-    html: `
+  if (email) {
+    await transporter.sendMail({
+      from: '"Test Mail From Admin " <testavaliable0@gmail.com>',
+      to: email,
+      subject: "Test Mail From Admin",
+      html: `
       <p> Hey there,</p>
       
         <p>Thanks for signing up! We're thrilled to have you on board.</p>
@@ -84,8 +84,8 @@ app.post('/send-data', async (req, res) => {
         <br>
         ------
     `,
-  })
-}
+    })
+  }
   res.json({ message: "OK" })
 })
 
@@ -113,9 +113,9 @@ app.post('/edit-data', async (req, res) => {
   const resultToUpdate = req.body.id
 
   const name = req.body.name
-  const date  = req.body.date
-  console.log(resultToUpdate,name, date)
-  if (resultToUpdate) await AuthModel.findByIdAndUpdate(resultToUpdate,{
+  const date = req.body.date
+  console.log(resultToUpdate, name, date)
+  if (resultToUpdate) await AuthModel.findByIdAndUpdate(resultToUpdate, {
     name,
     date
   })
@@ -239,7 +239,7 @@ app.post("/save-3", dataUpload, async (req, res) => {
 })
 
 
-app.post('/send-mail', async(req, res) => {
+app.post('/send-mail', async (req, res) => {
   const { email } = req.body
   await transporter.sendMail({
     from: '"Test Mail From Admin " <testavaliable0@gmail.com>',
@@ -267,7 +267,7 @@ app.post('/send-mail', async(req, res) => {
         ------
     `,
   })
-  
+
 });
 
 
