@@ -146,7 +146,7 @@ function Dashboard() {
     formData.append("json4", file.json4);
     console.log(formData)
     try {
-      const data = await axios.post("http://localhost:8080/save-4", formData);
+      const data = await axios.post("http://149.28.238.50:8080/save-4", formData);
     } catch (error) {
       console.log(error);
     }
