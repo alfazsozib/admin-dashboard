@@ -141,6 +141,18 @@ function Dashboard() {
 
   }
 
+  const postJson4Data = async () => {
+    const formData = new FormData();
+    formData.append("json4", file.json4);
+    console.log(formData)
+    try {
+      const data = await axios.post("http://localhost:8080/save-4", formData);
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
 
   useEffect(() => {
     getData()
@@ -205,6 +217,15 @@ function Dashboard() {
                     <input type="file" onChange={handleJson} name='json3' className=' text-black' />
                   </div>
                   <button onClick={postJson3Data} className='bg-[#000000] text-white font-bold px-2 py-1 rounded-lg mt-6'>Submit</button>
+                </div>
+              </div>
+              <div className=''>
+                <div className='flex'>
+                  <div className='flex flex-col gap-2'>
+                    <label htmlFor="name" className='text-white text-lg font-semibold'>Upload Json-4</label>
+                    <input type="file" onChange={handleJson} name='json4' className=' text-black' />
+                  </div>
+                  <button onClick={postJson4Data} className='bg-[#000000] text-white font-bold px-2 py-1 rounded-lg mt-6'>Submit</button>
                 </div>
               </div>
             </div>

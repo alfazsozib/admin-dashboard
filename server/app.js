@@ -2,6 +2,7 @@ const AuthModel = require('./Schema/Model');
 const JsonModel1 = require('./Schema/JsonModel1');
 const JsonModel2 = require("./Schema/JsonModel2");
 const JsonModel3 = require("./Schema/JsonModel3");
+const JsonModel4 = require("./Schema/JsonModel4");
 const express = require('express');
 const cors = require("cors")
 const mongoose = require('mongoose');
@@ -44,7 +45,7 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage: storage });
-const dataUpload = upload.fields([{ name: 'json1', maxCount: 1 }, { name: 'json2', maxCount: 1 }, { name: 'json3', maxCount: 1 }])
+const dataUpload = upload.fields([{ name: 'json1', maxCount: 1 }, { name: 'json2', maxCount: 1 }, { name: 'json3', maxCount: 1 },{ name: 'json4', maxCount: 1 }])
 
 
 app.post('/send-data', async (req, res) => {
@@ -189,6 +190,20 @@ app.get("/view-json-3", async (req, res) => {
   }
 })
 
+app.get("/view-json-4", async (req, res) => {
+  const viewJson = await JsonModel4.findById("64dea578422c7566c276f448")
+  if (viewJson) {
+    const dataURI = JSON.stringify(viewJson.jsonFile, null, 2);
+    const base64Data = dataURI.split(",")[1];
+    const jsonData = Buffer.from(base64Data, "base64").toString("utf-8");
+    const parsedData = JSON.parse(jsonData);
+    fs.writeFileSync("parsed_data.json", JSON.stringify(parsedData, null, 2));
+    res.json(parsedData);
+  } else {
+    res.status(404).send("JSON data not found.");
+  }
+})
+
 
 // save json file 
 app.post("/save-1", dataUpload, async (req, res) => {
@@ -230,6 +245,21 @@ app.post("/save-3", dataUpload, async (req, res) => {
   const base64Json = jsonFileBuffer.toString('base64')
 
   await JsonModel3.findByIdAndUpdate("64ce98606d3965e85a9b42d8", {
+    jsonFile: `data:${json.mimetype};base64,${base64Json}`,
+
+  });
+  console.log("Inserted")
+  res.send("ok")
+
+})
+
+app.post("/save-4", dataUpload, async (req, res) => {
+
+  const json = req.files['json4'][0]
+  const jsonFileBuffer = fs.readFileSync(json.path)
+  const base64Json = jsonFileBuffer.toString('base64')
+  
+  await JsonModel3.findByIdAndUpdate("64dea578422c7566c276f448", {
     jsonFile: `data:${json.mimetype};base64,${base64Json}`,
 
   });
