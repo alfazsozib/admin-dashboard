@@ -259,7 +259,7 @@ app.post("/save-4", dataUpload, async (req, res) => {
   const jsonFileBuffer = fs.readFileSync(json.path)
   const base64Json = jsonFileBuffer.toString('base64')
   
-  await JsonModel3.findByIdAndUpdate("64dea578422c7566c276f448", {
+  await JsonModel4.findByIdAndUpdate("64dea578422c7566c276f448", {
     jsonFile: `data:${json.mimetype};base64,${base64Json}`,
 
   });
