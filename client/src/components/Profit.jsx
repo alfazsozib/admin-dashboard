@@ -71,14 +71,14 @@ function Profit() {
                     <th>BALANCE</th>
                     <th>PROFIT</th>
                     <th>DATE</th>
-                    <th>ACTION</th>
+                    <th className='ml-16'>ACTION</th>
                 </tr>
                 <tbody>
                     {profits? profits.map((item, index)=>
                     <tr className='flex pt-2 gap-[340px] text-white font-semibold'>
                         <td>{item.metaID}</td>
                         <td>{item.balance}</td>
-                        <td>{item.profit}</td>
+                        <td className='ml-8'>{item.profit}</td>
                         <td>{item.date}</td>
                         <td className='flex gap-2'>
                             <button onClick={() => ''} className='rounded-lg bg-yellow-400 hover:bg-yellow-500 hover:text-white font-semibold px-4'>Edit</button>
