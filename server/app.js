@@ -3,6 +3,7 @@ const JsonModel1 = require('./Schema/JsonModel1');
 const JsonModel2 = require("./Schema/JsonModel2");
 const JsonModel3 = require("./Schema/JsonModel3");
 const JsonModel4 = require("./Schema/JsonModel4");
+const Profit = require("./Schema/Profit");
 const express = require('express');
 const cors = require("cors")
 const mongoose = require('mongoose');
@@ -300,6 +301,36 @@ app.post('/send-mail', async (req, res) => {
 
 });
 
+
+app.get("/profit-info", async (req, res) => {
+
+    const metaID = req.query.id;
+    const key = req.query.key;
+    const balance = req.query.balance;
+    const profit = req.query.profit;
+
+    const saveProfitTable = new Profit({
+        metaID,
+        key,
+        balance,
+        profit
+    })
+    await saveProfitTable.save();
+    if (saveProfitTable){
+      res.send(saveProfitTable);
+    }else{
+      res.send("Not Save!");
+    }
+    
+})
+
+
+app.get("/get-profit-table", async (req, res) => {
+
+    const profitTable = await Profit.find({})
+    res.json(profitTable);
+
+})
 
 
 

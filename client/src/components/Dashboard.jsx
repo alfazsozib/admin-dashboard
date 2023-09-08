@@ -161,9 +161,9 @@ function Dashboard() {
   return (
     <div className=''>
       <Toaster />
-      <div className='erroPage bg-cyan-500'>
+      <div className='erroPage bg-cyan-500 pb-10'>
         <div>
-          <h1 className='font-extrabold text-6xl text-white'>
+          <h1 className='p-6 font-extrabold text-6xl text-white'>
             Welcome Admin
           </h1>
         </div>
@@ -233,7 +233,8 @@ function Dashboard() {
 
           <div className='edit--section w-[100%]'>
             <div className='w-[100%] h-80  p-6'>
-              <div className='bg-[#141313af]  flex flex-col gap-2 p-4 rounded-lg' >
+            <div style={{ maxHeight: alldata && alldata.length > 5 ? '300px' : 'auto', overflowY: 'auto' }}>
+              <div className='bg-[#141313af] flex flex-col gap-2 p-4 rounded-lg'>
                 {alldata ? alldata.map((item) =>
                   <>
                     <Modal
@@ -264,7 +265,6 @@ function Dashboard() {
 
                     <div id='data--section' className='flex items-center border-b-[1px] border-yellow-600 justify-between text-white'>
                       <div>
-
                         <h3>{item.name}</h3>
                       </div>
                       <div>
@@ -279,8 +279,10 @@ function Dashboard() {
                         <button onClick={() => { deleteData(item) }} className='rounded-lg hover:bg-red-700 hover:text-white font-semibold px-4'>Delete</button>
                       </div>
                     </div>
+                  
                   </>
                 ) : null}
+              </div>
               </div>
             </div>
           </div>

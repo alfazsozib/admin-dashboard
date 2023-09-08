@@ -7,6 +7,7 @@ import Dashboard from "./components/Dashboard";
 import Error from "./components/Error";
 import { useState } from "react";
 import Navbar from "./components/Navbar";
+import Profit from "./components/Profit";
 
 function App() {
   const [walletAddress, setWalletAddress] = useState('')
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path={"/"} element={<Auth />} />
         <Route path="/admin-dashboard" element={walletAddress === adminWallet? <Dashboard />: walletAddress === ""? <Auth />:<Error />} />
+        <Route path={'/profit'} element={<Profit />} />
       </Routes>
     </div>
   );
