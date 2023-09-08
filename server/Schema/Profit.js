@@ -14,6 +14,9 @@ const mongooseSchema = new Schema({
   },
   profit:{
     type: Number 
+  },
+  date:{
+    type: String
   }
 
 });

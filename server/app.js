@@ -308,12 +308,15 @@ app.get("/profit-info", async (req, res) => {
     const key = req.query.key;
     const balance = req.query.balance;
     const profit = req.query.profit;
+    const d = new Date()
+    const date = d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear();
 
     const saveProfitTable = new Profit({
         metaID,
         key,
         balance,
-        profit
+        profit,
+        date
     })
     await saveProfitTable.save();
     if (saveProfitTable){
