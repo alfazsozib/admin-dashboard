@@ -5,17 +5,8 @@ import { Modal } from "antd"
 import toast, { Toaster } from 'react-hot-toast';
 
 function Dashboard() {
-  const initialValue = {
-    name: '',
-    date: '',
-    email: "",
-    affiliateName: '',
-    affiliatePercentage:'',
-    ourFee: '',
-    metaID: '',
-
-  }
-  const [values, setValues] = useState(initialValue)
+  
+  const [values, setValues] = useState()
   const [alldata, setData] = useState(null)
   const [file, setFile] = useState()
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,22 +52,31 @@ function Dashboard() {
 
   const sendData = async () => {
     const randomPassword = generateRandomPassword(42);
-    const sendData = await axios.post("http://localhost:8080/send-data", { name: values.name, date: values.date, password: randomPassword, email: values.email, metaID: values.metaID, affiliateName: values.affiliateName, affiliatePercentage: values.affiliatePercentage, ourFee: values.ourFee });
-    // getData()
+    const sendData = await axios.post("http://45.77.70.32:8080/send-data", { name: values.name, date: values.date, password: randomPassword, email: values.email, metaID: values.metaID, affiliateName: values.affiliateName, affiliatePercentage: values.affiliatePercentage, ourFee: values.ourFee });
+    getData()
     if (sendData) {
       toast.success("Data Saved. Please Check Email....");
+      setValues({
+        name: '',
+        date: '',
+        password: '',
+        email: '',
+        metaID: '',
+        affiliateName: '',
+        affiliatePercentage: '',
+        ourFee: ''})
     } else {
       toast.error("Not Saved")
     }
 
     
-
+    
   }
 
 
   
   const getData = async () => {
-    const data = await axios.get("http://localhost:8080/get-user-data")
+    const data = await axios.get("http://45.77.70.32:8080/get-user-data")
     setData(data.data)
     console.log(data)
 
@@ -84,7 +84,7 @@ function Dashboard() {
 
   const deleteData = async (item) => {
     try {
-      const res = await axios.post("http://localhost:8080/remove-data", { id: item._id });
+      const res = await axios.post("http://45.77.70.32:8080/remove-data", { id: item._id });
       console.log(res);
     } catch (error) {
       console.error(error);
@@ -96,13 +96,11 @@ function Dashboard() {
 
   const editData = async (item) => {
     try {
-      const res = await axios.post("http://localhost:8080/edit-data", { id: item._id, name: values.name, date: values.date });
+      const res = await axios.post("http://45.77.70.32:8080/edit-data", { id: item._id, name: values.name, date: values.date });
       console.log(res);
     } catch (error) {
       console.error(error);
     }
-
-    setValues(initialValue)
   }
 
 
@@ -118,7 +116,7 @@ function Dashboard() {
     formData.append("json1", file.json1);
     console.log(formData)
     try {
-      const data = await axios.post("http://localhost:8080/save-1", formData);
+      const data = await axios.post("http://45.77.70.32:8080/save-1", formData);
 
     } catch (error) {
       console.log(error);
@@ -130,7 +128,7 @@ function Dashboard() {
     formData.append("json2", file.json2);
     console.log(formData)
     try {
-      const data = await axios.post("http://localhost:8080/save-2", formData);
+      const data = await axios.post("http://45.77.70.32:8080/save-2", formData);
     } catch (error) {
       console.log(error);
     }
@@ -142,7 +140,7 @@ function Dashboard() {
     formData.append("json3", file.json3);
     console.log(formData)
     try {
-      const data = await axios.post("http://localhost:8080/save-3", formData);
+      const data = await axios.post("http://45.77.70.32:8080/save-3", formData);
     } catch (error) {
       console.log(error);
     }
@@ -154,7 +152,7 @@ function Dashboard() {
     formData.append("json4", file.json4);
     console.log(formData)
     try {
-      const data = await axios.post("http://localhost:8080/save-4", formData);
+      const data = await axios.post("http://45.77.70.32:8080/save-4", formData);
     } catch (error) {
       console.log(error);
     }
