@@ -4,6 +4,7 @@ const JsonModel2 = require("./Schema/JsonModel2");
 const JsonModel3 = require("./Schema/JsonModel3");
 const JsonModel4 = require("./Schema/JsonModel4");
 const Profit = require("./Schema/Profit");
+const NewUser = require("./Schema/NewUser");
 const express = require('express');
 const cors = require("cors")
 const mongoose = require('mongoose');
@@ -50,13 +51,18 @@ const dataUpload = upload.fields([{ name: 'json1', maxCount: 1 }, { name: 'json2
 
 
 app.post('/send-data', async (req, res) => {
-  let { name, password, date, email } = req.body
+  let { name, password, date, email,affiliateName, affiliatePercentage , metaID , ourFee } = req.body
   console.log(name, password, email)
+  console.log(req.body)
   // const  date = new Date(date)
-  const saveData = new AuthModel({
+  const saveData = new NewUser({
     name,
     password,
-    date
+    date,
+    affiliateName,
+    affiliatePercentage,
+    metaID,
+    ourFee
   })
   saveData.save()
 
@@ -98,6 +104,11 @@ app.get("/get-data", async (req, res) => {
   res.json(allData)
 })
 
+
+app.get("/get-user-data", async (req, res) => {
+  const allData = await NewUser.find({})
+  res.json(allData)
+})
 
 
 app.post('/remove-data', async (req, res) => {
