@@ -303,7 +303,7 @@ function Dashboard() {
                             </tr>
                           </thead>
                           <tbody>
-                            {alldata.map((user, index) => (
+                            {alldata ? alldata.map((user, index) => (
                               <tr key={index} className=''>
                                 <td className='text-center text-white border-2 border-[#41dbd5] p-[1px]'> {user.name}</td>
                                 <td className='text-center text-white border-2 border-[#41dbd5] p-[1px]'>{user.password}</td>
@@ -319,7 +319,7 @@ function Dashboard() {
                                 </div>
                                 </td>
                               </tr>
-                            ))}
+                            )): <p className='text-white text-lg'>Loading ....</p>}
                           </tbody>
                         </table>
                    

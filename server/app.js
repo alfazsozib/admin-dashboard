@@ -114,7 +114,7 @@ app.get("/get-user-data", async (req, res) => {
 app.post('/remove-data', async (req, res) => {
   console.log(req)
   const resultToDelete = req.body.id
-  if (resultToDelete) await AuthModel.findByIdAndDelete(resultToDelete)
+  if (resultToDelete) await NewUser.findByIdAndDelete(resultToDelete)
   try {
     res.send("success");
   } catch (e) { res.send(e) }
@@ -128,7 +128,7 @@ app.post('/edit-data', async (req, res) => {
   const name = req.body.name
   const date = req.body.date
   console.log(resultToUpdate, name, date)
-  if (resultToUpdate) await AuthModel.findByIdAndUpdate(resultToUpdate, {
+  if (resultToUpdate) await NewUser.findByIdAndUpdate(resultToUpdate, {
     name,
     date
   })
@@ -143,10 +143,10 @@ app.get('/query-data', async (req, res) => {
   const dateNow = new Date()
   const findData = await AuthModel.findOne({ password, name })
 
-  if (name === "83626492" && password === "A8iNsNBuM943I2935l3Nipp2Z5nWxyM0bOBFSQcrjl") {
-    res.json({ message: "True" })
-  }
-  else if (findData) {
+  // if (name === "83626492" && password === "A8iNsNBuM943I2935l3Nipp2Z5nWxyM0bOBFSQcrjl") {
+  //   res.json({ message: "True" })
+  // }
+  if (findData) {
     const date = findData.date
     if (date > dateNow) {
       res.json({ message: "True" })
