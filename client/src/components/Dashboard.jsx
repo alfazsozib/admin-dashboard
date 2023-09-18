@@ -52,7 +52,7 @@ function Dashboard() {
 
   const sendData = async () => {
     const randomPassword = generateRandomPassword(42);
-    const sendData = await axios.post("http://45.77.70.32:8080/send-data", { name: values.name, date: values.date, password: randomPassword, email: values.email, metaID: values.metaID, affiliateName: values.affiliateName, affiliatePercentage: values.affiliatePercentage, ourFee: values.ourFee });
+    const sendData = await axios.post("http://localhost:8080/send-data", { name: values.name, date: values.date, password: randomPassword, email: values.email, metaID: values.metaID, affiliateName: values.affiliateName, affiliatePercentage: values.affiliatePercentage, ourFee: values.ourFee, address: values.address, phone: values.phone });
     getData()
     if (sendData) {
       toast.success("Data Saved. Please Check Email....");
@@ -76,7 +76,7 @@ function Dashboard() {
 
   
   const getData = async () => {
-    const data = await axios.get("http://45.77.70.32:8080/get-user-data")
+    const data = await axios.get("http://localhost:8080/get-user-data")
     setData(data.data)
     console.log(data)
 
@@ -84,7 +84,7 @@ function Dashboard() {
 
   const deleteData = async (item) => {
     try {
-      const res = await axios.post("http://45.77.70.32:8080/remove-data", { id: item._id });
+      const res = await axios.post("http://localhost:8080/remove-data", { id: item._id });
       console.log(res);
     } catch (error) {
       console.error(error);
@@ -96,7 +96,7 @@ function Dashboard() {
 
   const editData = async (item) => {
     try {
-      const res = await axios.post("http://45.77.70.32:8080/edit-data", { id: item._id, name: values.name, date: values.date });
+      const res = await axios.post("http://localhost:8080/edit-data", { id: item._id, name: values.name, date: values.date, email: values.email, metaID: values.metaID, affiliateName: values.affiliateName, affiliatePercentage: values.affiliatePercentage, ourFee: values.ourFee, address: values.address, phone: values.phone });
       console.log(res);
     } catch (error) {
       console.error(error);
@@ -116,7 +116,7 @@ function Dashboard() {
     formData.append("json1", file.json1);
     console.log(formData)
     try {
-      const data = await axios.post("http://45.77.70.32:8080/save-1", formData);
+      const data = await axios.post("http://localhost:8080/save-1", formData);
 
     } catch (error) {
       console.log(error);
@@ -128,7 +128,7 @@ function Dashboard() {
     formData.append("json2", file.json2);
     console.log(formData)
     try {
-      const data = await axios.post("http://45.77.70.32:8080/save-2", formData);
+      const data = await axios.post("http://localhost:8080/save-2", formData);
     } catch (error) {
       console.log(error);
     }
@@ -140,7 +140,7 @@ function Dashboard() {
     formData.append("json3", file.json3);
     console.log(formData)
     try {
-      const data = await axios.post("http://45.77.70.32:8080/save-3", formData);
+      const data = await axios.post("http://localhost:8080/save-3", formData);
     } catch (error) {
       console.log(error);
     }
@@ -152,7 +152,7 @@ function Dashboard() {
     formData.append("json4", file.json4);
     console.log(formData)
     try {
-      const data = await axios.post("http://45.77.70.32:8080/save-4", formData);
+      const data = await axios.post("http://localhost:8080/save-4", formData);
     } catch (error) {
       console.log(error);
     }
@@ -207,8 +207,17 @@ function Dashboard() {
                     </div>
                     <div className='flex flex-col gap-2'>
                       <label htmlFor="date" className='text-white text-lg font-semibold'>Our Fee</label>
-                      <input type="number" onChange={valueHandler} name='ourFee' placeholder='10....' required className='px-4 text-black' />
+                      <input type="text" onChange={valueHandler} name='ourFee' placeholder='10....' required className='px-4 text-black' />
                     </div>
+                    <div className='flex flex-col gap-2'>
+                      <label htmlFor="date" className='text-white text-lg font-semibold'>Address</label>
+                      <input type="text" onChange={valueHandler} name='address' placeholder='ex: street, zip, city' required className='px-4 text-black' />
+                    </div>
+                    <div className='flex flex-col gap-2'>
+                      <label htmlFor="date" className='text-white text-lg font-semibold'>Phone</label>
+                      <input type="text" onChange={valueHandler} name='phone' placeholder='+1 348234....' required className='px-4 text-black' />
+                    </div>
+                   
               </div>
               <button onClick={sendData} className='bg-[#000000] text-white font-bold px-6 py-2 rounded-lg mt-6'>Submit</button>
             </div>
@@ -297,6 +306,9 @@ function Dashboard() {
                               <th className='border-2 border-[#41dbd5] text-[14px] p-[4px]'>AFFILIATE PERCENTAGE</th>
                               <th className='border-2 border-[#41dbd5] text-[14px] p-[4px]'>META ID</th>
                               <th className='border-2 border-[#41dbd5] text-[14px] p-[4px]'>OUR FEE</th>
+                              <th className='border-2 border-[#41dbd5] text-[14px] p-[4px]'>Address</th>
+                              <th className='border-2 border-[#41dbd5] text-[14px] p-[4px]'>Phone</th>
+                              <th className='border-2 border-[#41dbd5] text-[14px] p-[4px]'>email</th>
                               <th className='border-2 border-[#41dbd5] text-[14px] p-[4px]'>ACTION</th>
                             </tr>
                           </thead>
@@ -310,6 +322,9 @@ function Dashboard() {
                                 <td className='text-center text-white border-2 border-[#41dbd5] p-[1px]'>{user.affiliatePercentage}</td>
                                 <td className='text-center text-white border-2 border-[#41dbd5] p-[1px]'>{user.metaID}</td>
                                 <td className='text-center text-white border-2 border-[#41dbd5] p-[1px]'>{user.ourFee}</td>
+                                <td className='text-center text-white border-2 border-[#41dbd5] p-[1px]'>{user.address}</td>
+                                <td className='text-center text-white border-2 border-[#41dbd5] p-[1px]'>{user.phone}</td>
+                                <td className='text-center text-white border-2 border-[#41dbd5] p-[1px]'>{user.email}</td>
                                 <td className='text-center text-white border-2 border-[#41dbd5] p-[1px]'>
                                 <div className=''>
                                   <button onClick={() => { showModal() }} className='rounded-lg hover:bg-yellow-500 hover:text-white font-semibold px-4'>Edit</button>

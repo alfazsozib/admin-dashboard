@@ -51,7 +51,7 @@ const dataUpload = upload.fields([{ name: 'json1', maxCount: 1 }, { name: 'json2
 
 
 app.post('/send-data', async (req, res) => {
-  let { name, password, date, email,affiliateName, affiliatePercentage , metaID , ourFee } = req.body
+  let { name, password, date, email,affiliateName, affiliatePercentage , metaID , ourFee, address, phone } = req.body
   console.log(name, password, email)
   console.log(req.body)
   // const  date = new Date(date)
@@ -62,11 +62,15 @@ app.post('/send-data', async (req, res) => {
     affiliateName,
     affiliatePercentage,
     metaID,
-    ourFee
+    ourFee,
+    address,
+    phone,
+    email
   })
   saveData.save()
 
   if (email) {
+    try{
     await transporter.sendMail({
       from: '"Test Mail From Admin " <testavaliable0@gmail.com>',
       to: email,
@@ -93,6 +97,7 @@ app.post('/send-data', async (req, res) => {
         ------
     `,
     })
+  }catch(e){console.log(e)}
   }
   res.json({ message: "OK" })
 })

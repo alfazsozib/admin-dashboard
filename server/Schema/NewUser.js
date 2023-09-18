@@ -23,7 +23,16 @@ const mongooseSchema = new Schema({
     type: Number,
   },
   ourFee: {
-    type: Number
+    type: Number,
+  },
+  address: {
+    type: String,
+  },
+  phone: {
+    type: String
+  },
+  email: {
+    type: String
   }
 
 
