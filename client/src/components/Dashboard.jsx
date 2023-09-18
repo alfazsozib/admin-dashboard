@@ -10,7 +10,19 @@ function Dashboard() {
   const [alldata, setData] = useState(null)
   const [file, setFile] = useState()
   const [isModalOpen, setIsModalOpen] = useState(false);
+  let initialValue = {
+    name: '',
+    date: '',
+    password: '',
+    email: '',
+    metaID: '',
+    affiliateName: '',
+    affiliatePercentage: '',
+    ourFee: '',
+    phone:'',
+    address:''
 
+  }
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -56,15 +68,7 @@ function Dashboard() {
     getData()
     if (sendData) {
       toast.success("Data Saved. Please Check Email....");
-      setValues({
-        name: '',
-        date: '',
-        password: '',
-        email: '',
-        metaID: '',
-        affiliateName: '',
-        affiliatePercentage: '',
-        ourFee: ''})
+      setValues(initialValue)
     } else {
       toast.error("Not Saved")
     }
@@ -97,10 +101,12 @@ function Dashboard() {
   const editData = async (item) => {
     try {
       const res = await axios.post("http://localhost:8080/edit-data", { id: item._id, name: values.name, date: values.date, email: values.email, metaID: values.metaID, affiliateName: values.affiliateName, affiliatePercentage: values.affiliatePercentage, ourFee: values.ourFee, address: values.address, phone: values.phone });
-      console.log(res);
+      
+      if (res) return toast.success("Data Saved!")
     } catch (error) {
       console.error(error);
     }
+    setValues(initialValue)
   }
 
 
@@ -281,7 +287,7 @@ function Dashboard() {
 
                     >
                       <div className='p-10'>
-                        <div className='flex gap-6'>
+                        <div className='grid grid-cols-2 gap-4'>
                           <div className='flex flex-col gap-2'>
                             <label htmlFor="name" className='text-white text-lg font-semibold'>Name</label>
                             <input type="text" onChange={valueHandler} name='name' className='px-4 text-black' />
@@ -290,6 +296,35 @@ function Dashboard() {
                             <label htmlFor="date" className='text-white text-lg font-semibold'>Date</label>
                             <input type="date" onChange={valueHandler} name='date' className='px-4 text-black' />
                           </div>
+                          <div className='flex flex-col gap-2'>
+                      <label htmlFor="email" className='text-white text-lg font-semibold'>Email</label>
+                      <input type="email" required onChange={valueHandler} name='email' placeholder='example@gmail.com' className='px-4 text-black' />
+                    </div>
+                    <div className='flex flex-col gap-2'>
+                      <label htmlFor="metaID" className='text-white text-lg font-semibold'>Meta ID</label>
+                      <input type="text" onChange={valueHandler} name='metaID' placeholder='123435...' required className='px-4 text-black' />
+                    </div>
+                    
+                    <div className='flex flex-col gap-2'>
+                      <label htmlFor="affiliateName" className='text-white text-lg font-semibold'>Affiliate Name</label>
+                      <input type="text" onChange={valueHandler} name='affiliateName' placeholder='ex: jhon' required className='px-4 text-black' />
+                    </div>
+                    <div className='flex flex-col gap-2'>
+                      <label htmlFor="affiliatePercentage" className='text-white text-lg font-semibold'>Affiliate Percentage</label>
+                      <input type="number" onChange={valueHandler} name='affiliatePercentage' required placeholder='2...' className='px-4 text-black' />
+                    </div>
+                    <div className='flex flex-col gap-2'>
+                      <label htmlFor="date" className='text-white text-lg font-semibold'>Our Fee</label>
+                      <input type="text" onChange={valueHandler} name='ourFee' placeholder='10....' required className='px-4 text-black' />
+                    </div>
+                    <div className='flex flex-col gap-2'>
+                      <label htmlFor="date" className='text-white text-lg font-semibold'>Address</label>
+                      <input type="text" onChange={valueHandler} name='address' placeholder='ex: street, zip, city' required className='px-4 text-black' />
+                    </div>
+                    <div className='flex flex-col gap-2'>
+                      <label htmlFor="date" className='text-white text-lg font-semibold'>Phone</label>
+                      <input type="text" onChange={valueHandler} name='phone' placeholder='+1 348234....' required className='px-4 text-black' />
+                    </div>
                         </div>
                         <button onClick={() => editData(item)} className='bg-[#000000] text-white font-bold px-6 py-2 rounded-lg mt-6'>Submit</button>
                       </div>

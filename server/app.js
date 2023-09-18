@@ -129,13 +129,18 @@ app.post('/remove-data', async (req, res) => {
 
 app.post('/edit-data', async (req, res) => {
   const resultToUpdate = req.body.id
-
-  const name = req.body.name
-  const date = req.body.date
+  let { name, password, date, email,affiliateName, affiliatePercentage , metaID , ourFee, address, phone } = req.body
   console.log(resultToUpdate, name, date)
   if (resultToUpdate) await NewUser.findByIdAndUpdate(resultToUpdate, {
     name,
-    date
+    date,
+    affiliateName,
+    affiliatePercentage,
+    metaID,
+    ourFee,
+    address,
+    phone,
+    email
   })
 
   res.json("ok");
@@ -148,9 +153,7 @@ app.get('/query-data', async (req, res) => {
   const dateNow = new Date()
   const findData = await AuthModel.findOne({ password, name })
 
-  // if (name === "83626492" && password === "A8iNsNBuM943I2935l3Nipp2Z5nWxyM0bOBFSQcrjl") {
-  //   res.json({ message: "True" })
-  // }
+ 
   if (findData) {
     const date = findData.date
     if (date > dateNow) {
