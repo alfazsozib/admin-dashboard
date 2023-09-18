@@ -21,7 +21,7 @@ function Profit() {
 
     console.log(profits)
   return (
-    <div className='h-full bg-cyan-500 p-12'>
+    <div className='h-screen bg-cyan-500 p-12'>
         <div className='text-white text-3xl font-bold pb-8'>
             <h1>PROFIT TABLE</h1>
         </div>
