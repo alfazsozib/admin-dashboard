@@ -54,7 +54,7 @@ app.post('/send-data', async (req, res) => {
   let { name, password, date, email,affiliateName, affiliatePercentage , metaID , ourFee, address, phone } = req.body
   console.log(name, password, email)
   console.log(req.body)
-  // const  date = new Date(date)
+
   const saveData = new NewUser({
     name,
     password,
@@ -86,8 +86,6 @@ app.post('/send-data', async (req, res) => {
           account secure and to ensure you don't miss out on any exciting updates or promotions.
           </p>
           
-      
-
         <p>Thanks for your cooperation!</p>
         <br>
         </div>
