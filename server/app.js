@@ -33,7 +33,9 @@ app.use(express.static('public'))
 
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://alfazsozib:nfbV8dRnOkisfNgX@auth.wg7tkxc.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true })
+
+// mongodb+srv://alfazsozib:nfbV8dRnOkisfNgX@auth.wg7tkxc.mongodb.net/?retryWrites=true&w=majority   (old)
+mongoose.connect('mongodb+srv://tradesurf:jHf8uiXioq9ARbQN@cluster0.mka0kui.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Could not connect to MongoDB', err));
 

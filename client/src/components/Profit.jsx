@@ -11,7 +11,7 @@ function Profit() {
     const [profits, setProfits] = useState('');
 
     const getProfitData=async()=>{
-        const data = await axios.get("http://45.77.70.32:8080/get-profit-table")
+        const data = await axios.get("http://149.28.238.50:8080/get-profit-table")
         setProfits(data.data);
     }
 
@@ -21,7 +21,7 @@ function Profit() {
 
     console.log(profits)
   return (
-    <div className='h-screen bg-cyan-500 p-12'>
+    <div className='h-[100%] bg-cyan-500 p-12'>
         <div className='text-white text-3xl font-bold pb-8'>
             <h1>PROFIT TABLE</h1>
         </div>
@@ -44,8 +44,6 @@ function Profit() {
                     <td className='text-center text-white border-2 border-[#2bdede] p-[1px]'>{user.balance}</td>
                     <td className='text-center text-white border-2 border-[#2bdede] p-[1px]'>{user.profit}</td>
                     <td className='text-center text-white border-2 border-[#2bdede] p-[1px]'>{user.date}</td>
-                    
-                    
                     </tr>
                 )): <p className='text-white text-lg'>Loading ....</p>}
                 </tbody>

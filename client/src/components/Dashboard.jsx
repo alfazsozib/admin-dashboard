@@ -64,7 +64,7 @@ function Dashboard() {
 
   const sendData = async () => {
     const randomPassword = generateRandomPassword(42);
-    const sendData = await axios.post("http://45.77.70.32:8080/send-data", { name: values.name, date: values.date, password: randomPassword, email: values.email, metaID: values.metaID, affiliateName: values.affiliateName, affiliatePercentage: values.affiliatePercentage, ourFee: values.ourFee, address: values.address, phone: values.phone });
+    const sendData = await axios.post("http://149.28.238.50:8080/send-data", { name: values.name, date: values.date, password: randomPassword, email: values.email, metaID: values.metaID, affiliateName: values.affiliateName, affiliatePercentage: values.affiliatePercentage, ourFee: values.ourFee, address: values.address, phone: values.phone });
     getData()
     if (sendData) {
       toast.success("Data Saved. Please Check Email....");
@@ -80,7 +80,7 @@ function Dashboard() {
 
   
   const getData = async () => {
-    const data = await axios.get("http://45.77.70.32:8080/get-user-data")
+    const data = await axios.get("http://149.28.238.50:8080/get-user-data")
     setData(data.data)
     console.log(data)
 
@@ -88,7 +88,7 @@ function Dashboard() {
 
   const deleteData = async (item) => {
     try {
-      const res = await axios.post("http://45.77.70.32:8080/remove-data", { id: item._id });
+      const res = await axios.post("http://149.28.238.50:8080/remove-data", { id: item._id });
       console.log(res);
     } catch (error) {
       console.error(error);
@@ -100,7 +100,7 @@ function Dashboard() {
 
   const editData = async (item) => {
     try {
-      const res = await axios.post("http://45.77.70.32:8080/edit-data", { id: item._id, name: values.name, date: values.date, email: values.email, metaID: values.metaID, affiliateName: values.affiliateName, affiliatePercentage: values.affiliatePercentage, ourFee: values.ourFee, address: values.address, phone: values.phone });
+      const res = await axios.post("http://149.28.238.50:8080/edit-data", { id: item._id, name: values.name, date: values.date, email: values.email, metaID: values.metaID, affiliateName: values.affiliateName, affiliatePercentage: values.affiliatePercentage, ourFee: values.ourFee, address: values.address, phone: values.phone });
       
       if (res) return toast.success("Data Saved!")
     } catch (error) {
@@ -122,7 +122,7 @@ function Dashboard() {
     formData.append("json1", file.json1);
     console.log(formData)
     try {
-      const data = await axios.post("http://45.77.70.32:8080/save-1", formData);
+      const data = await axios.post("http://149.28.238.50:8080/save-1", formData);
 
     } catch (error) {
       console.log(error);
@@ -134,7 +134,7 @@ function Dashboard() {
     formData.append("json2", file.json2);
     console.log(formData)
     try {
-      const data = await axios.post("http://45.77.70.32:8080/save-2", formData);
+      const data = await axios.post("http://149.28.238.50:8080/save-2", formData);
     } catch (error) {
       console.log(error);
     }
@@ -146,7 +146,7 @@ function Dashboard() {
     formData.append("json3", file.json3);
     console.log(formData)
     try {
-      const data = await axios.post("http://45.77.70.32:8080/save-3", formData);
+      const data = await axios.post("http://149.28.238.50:8080/save-3", formData);
     } catch (error) {
       console.log(error);
     }
@@ -158,7 +158,7 @@ function Dashboard() {
     formData.append("json4", file.json4);
     console.log(formData)
     try {
-      const data = await axios.post("http://45.77.70.32:8080/save-4", formData);
+      const data = await axios.post("http://149.28.238.50:8080/save-4", formData);
     } catch (error) {
       console.log(error);
     }
