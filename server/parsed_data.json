@@ -1,13 +1,5 @@
 {
-  "EURUSD1": [
-    0.1
-  ],
-  "EURUSD2": [
-    5
-  ],
-  "AUDUSD2": [
-    1.5,
-    10,
-    7
-  ]
+  "fruit": "Apple",
+  "size": "Large",
+  "color": "Red"
 }

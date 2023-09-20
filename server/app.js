@@ -169,7 +169,7 @@ app.get('/query-data', async (req, res) => {
 
 
 app.get("/view-json-1", async (req, res) => {
-  const viewJson = await JsonModel1.findById("64cd3b6b2b5b34b77620db10")
+  const viewJson = await JsonModel1.findById("650ae9085cc1d701e7f7fa0c")
   if (viewJson) {
     const dataURI = JSON.stringify(viewJson.jsonFile, null, 2);
     const base64Data = dataURI.split(",")[1];
@@ -183,7 +183,7 @@ app.get("/view-json-1", async (req, res) => {
 })
 
 app.get("/view-json-2", async (req, res) => {
-  const viewJson = await JsonModel2.findById("64cd3a6dad7ca683f8ee265d")
+  const viewJson = await JsonModel2.findById("650ae9fb6d9b08faff9fdb72")
   if (viewJson) {
     const dataURI = JSON.stringify(viewJson.jsonFile, null, 2);
     const base64Data = dataURI.split(",")[1];
@@ -197,7 +197,7 @@ app.get("/view-json-2", async (req, res) => {
 })
 
 app.get("/view-json-3", async (req, res) => {
-  const viewJson = await JsonModel3.findById("64ce98606d3965e85a9b42d8")
+  const viewJson = await JsonModel3.findById("650ae9ff6d9b08faff9fdb74")
   if (viewJson) {
     const dataURI = JSON.stringify(viewJson.jsonFile, null, 2);
     const base64Data = dataURI.split(",")[1];
@@ -211,9 +211,11 @@ app.get("/view-json-3", async (req, res) => {
 })
 
 app.get("/view-json-4", async (req, res) => {
-  const viewJson = await JsonModel4.findById("64dea578422c7566c276f448")
+  const viewJson = await JsonModel4.findById('650aea036d9b08faff9fdb76')
+  console.log(viewJson)
   if (viewJson) {
     const dataURI = JSON.stringify(viewJson.jsonFile, null, 2);
+    console.log(dataURI)
     const base64Data = dataURI.split(",")[1];
     const jsonData = Buffer.from(base64Data, "base64").toString("utf-8");
     const parsedData = JSON.parse(jsonData);
@@ -232,10 +234,11 @@ app.post("/save-1", dataUpload, async (req, res) => {
   const jsonFileBuffer = fs.readFileSync(json.path)
   const base64Json = jsonFileBuffer.toString('base64')
 
-  await JsonModel1.findByIdAndUpdate("64cd3b6b2b5b34b77620db10", {
+  await JsonModel1.findByIdAndUpdate("650ae9085cc1d701e7f7fa0c", {
     jsonFile: `data:${json.mimetype};base64,${base64Json}`,
 
   });
+  
   console.log("Inserted")
   res.send("ok")
 
@@ -249,10 +252,11 @@ app.post("/save-2", dataUpload, async (req, res) => {
   const jsonFileBuffer = fs.readFileSync(json.path)
   const base64Json = jsonFileBuffer.toString('base64')
 
-  await JsonModel2.findByIdAndUpdate("64cd3a6dad7ca683f8ee265d", {
+  await JsonModel2.findByIdAndUpdate("650ae9fb6d9b08faff9fdb72", {
     jsonFile: `data:${json.mimetype};base64,${base64Json}`,
 
   });
+  
   console.log("Inserted")
   res.send("ok")
 
@@ -264,10 +268,11 @@ app.post("/save-3", dataUpload, async (req, res) => {
   const jsonFileBuffer = fs.readFileSync(json.path)
   const base64Json = jsonFileBuffer.toString('base64')
 
-  await JsonModel3.findByIdAndUpdate("64ce98606d3965e85a9b42d8", {
+  await JsonModel3.findByIdAndUpdate("650ae9ff6d9b08faff9fdb74", {
     jsonFile: `data:${json.mimetype};base64,${base64Json}`,
 
   });
+  
   console.log("Inserted")
   res.send("ok")
 
@@ -279,10 +284,11 @@ app.post("/save-4", dataUpload, async (req, res) => {
   const jsonFileBuffer = fs.readFileSync(json.path)
   const base64Json = jsonFileBuffer.toString('base64')
   
-  await JsonModel4.findByIdAndUpdate("64dea578422c7566c276f448", {
+  await JsonModel4.findByIdAndUpdate("650aea036d9b08faff9fdb76", {
     jsonFile: `data:${json.mimetype};base64,${base64Json}`,
 
   });
+
   console.log("Inserted")
   res.send("ok")
 
