@@ -40,7 +40,7 @@ function Profit() {
                 <tbody>
                 {profits ? profits.map((user, index) => (
                     <tr key={index} className=''>
-                    <td className='text-center text-white border-2 border-[#2bdede] p-[1px]'> {user.metaID}</td>
+                    <td className='text-center text-white border-2 border-[#2bdede] p-[1px]'> {user._id}</td>
                     <td className='text-center text-white border-2 border-[#2bdede] p-[1px]'>{user.balance}</td>
                     <td className='text-center text-white border-2 border-[#2bdede] p-[1px]'>{user.profit}</td>
                     <td className='text-center text-white border-2 border-[#2bdede] p-[1px]'>{user.date}</td>

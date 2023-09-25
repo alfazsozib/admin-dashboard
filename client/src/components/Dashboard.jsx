@@ -331,6 +331,7 @@ function Dashboard() {
                     <table>
                           <thead>
                             <tr className='text-white '>
+                            <th className='border-2 border-[#41dbd5] text-[14px] p-[4px]'>ID</th>
                               <th className='border-2 border-[#41dbd5] text-[14px] p-[4px]'>NAME</th>
                               <th className='border-2 border-[#41dbd5] text-[14px] p-[4px]'>API KEY</th>
                               <th className='border-2 border-[#41dbd5] text-[14px] p-[4px]'>DATE</th>
@@ -347,6 +348,7 @@ function Dashboard() {
                           <tbody>
                             {alldata ? alldata.map((user, index) => (
                               <tr key={index} className=''>
+                                <td className='text-center text-white border-2 border-[#41dbd5] p-[1px]'> {user._id}</td>
                                 <td className='text-center text-white border-2 border-[#41dbd5] p-[1px]'> {user.name}</td>
                                 <td className='text-center text-white border-2 border-[#41dbd5] p-[1px]'>{user.password}</td>
                                 <td className='text-center text-white border-2 border-[#41dbd5] p-[1px]'>{user.date}</td>
