@@ -105,7 +105,7 @@ app.post('/send-data', async (req, res) => {
 
 
 app.get("/get-data", async (req, res) => {
-  const allData = await AuthModel.find({})
+  const allData = await NewUser.find({})
   res.json(allData)
 })
 
@@ -149,9 +149,9 @@ app.post('/edit-data', async (req, res) => {
 
 app.get('/query-data', async (req, res) => {
   const password = req.query.key
-  const name = req.query.name
+  const metaID = req.query.metaID
   const dateNow = new Date()
-  const findData = await AuthModel.findOne({ password, name })
+  const findData = await NewUser.findOne({ password, metaID })
 
  
   if (findData) {

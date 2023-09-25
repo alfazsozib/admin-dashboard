@@ -72,9 +72,6 @@ function Dashboard() {
     } else {
       toast.error("Not Saved")
     }
-
-    
-    
   }
 
 
