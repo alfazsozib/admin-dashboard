@@ -68,17 +68,9 @@ function Profit() {
             </table>
             
         </div>
-        <div className="flex justify-center mt-4">
-        <ul className="pagination">
-          {Array.from({ length: totalPages }).map((_, index) => (
-            <li key={index} className={currentPage === index + 1 ? 'active' : ''}>
-              <button onClick={() => paginate(index + 1)} className="pagination-button">
-                {index + 1}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+        
+
+        
         {/* <ProfitTable /> */}
     </div>
     
