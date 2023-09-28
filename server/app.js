@@ -342,14 +342,14 @@ app.get("/profit-info", async (req, res) => {
     const minutes = dateFormat.getMinutes(); // 0-59
     const seconds = dateFormat.getSeconds(); // 0-59
 
-    const date = day+"/"+month+"/"+year+" "+hours+":"+minutes+":"+seconds
+    // const date = day+"/"+month+"/"+year+" "+hours+":"+minutes+":"+seconds
 
     const saveProfitTable = new Profit({
         metaID,
         key,
         balance,
         profit,
-        date
+        dateFormat
     })
     await saveProfitTable.save();
     if (saveProfitTable){

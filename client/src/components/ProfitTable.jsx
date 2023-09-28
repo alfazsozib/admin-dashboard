@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Modal } from "antd"
@@ -5,44 +6,22 @@ import { Modal } from "antd"
 import toast, { Toaster } from 'react-hot-toast';
 
 import "./profit.css"
-import ProfitTable from './ProfitTable';
 
 
-function Profit() {
-    const [profits, setProfits] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
-    const [dataPerPage] = useState(20);
+import { TablePagination } from '@mui/base';
 
-    // Assuming 'profits' is the data you want to paginate
-    const indexOfLastData = currentPage * dataPerPage;
-    const indexOfFirstData = indexOfLastData - dataPerPage;
-    const currentData = profits.slice(indexOfFirstData, indexOfLastData);
 
-    const totalPages = Math.ceil(profits.length / dataPerPage);
 
-    const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    }
 
-    useEffect(() => {
-    setCurrentPage(1); // Reset to first page whenever profits change
-    }, [profits]);
+function ProfitTable() {
 
     const getProfitData=async()=>{
-        const data = await axios.get("http://149.28.238.50:8080/get-profit-table")
+        const data = await axios.get("http://localhost:8080/get-profit-table")
         setProfits(data.data);
     }
 
-    useEffect(()=>{
-        getProfitData()
-    },[])
-
-    console.log(profits)
   return (
     <div className='h-[100%] bg-cyan-500 p-12'>
-        <div className='text-white text-3xl font-bold pb-8'>
-            <h1>PROFIT TABLE</h1>
-        </div>
 
         <div className='bg-[#00000082] rounded-lg'>
             <table className='w-full rounded-lg'>
@@ -68,21 +47,8 @@ function Profit() {
             </table>
             
         </div>
-        <div className="flex justify-center mt-4">
-        <ul className="pagination">
-          {Array.from({ length: totalPages }).map((_, index) => (
-            <li key={index} className={currentPage === index + 1 ? 'active' : ''}>
-              <button onClick={() => paginate(index + 1)} className="pagination-button">
-                {index + 1}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-        {/* <ProfitTable /> */}
-    </div>
-    
-    )
+        </div>
+  )
 }
 
-export default Profit
+export default ProfitTable
