@@ -333,14 +333,14 @@ app.get("/profit-info", async (req, res) => {
     const key = req.query.key;
     const balance = req.query.balance;
     const profit = req.query.profit;
-    const dateFormat = new Date()
+    const date = new Date()
     
-    const year = dateFormat.getFullYear(); // e.g., 2023
-    const month = dateFormat.getMonth(); // 0-11 (January is 0)
-    const day = dateFormat.getDate(); // 1-31
-    const hours = dateFormat.getHours(); // 0-23
-    const minutes = dateFormat.getMinutes(); // 0-59
-    const seconds = dateFormat.getSeconds(); // 0-59
+    // const year = dateFormat.getFullYear(); // e.g., 2023
+    // const month = dateFormat.getMonth(); // 0-11 (January is 0)
+    // const day = dateFormat.getDate(); // 1-31
+    // const hours = dateFormat.getHours(); // 0-23
+    // const minutes = dateFormat.getMinutes(); // 0-59
+    // const seconds = dateFormat.getSeconds(); // 0-59
 
     // const date = day+"/"+month+"/"+year+" "+hours+":"+minutes+":"+seconds
 
@@ -349,7 +349,7 @@ app.get("/profit-info", async (req, res) => {
         key,
         balance,
         profit,
-        dateFormat
+        date
     })
     await saveProfitTable.save();
     if (saveProfitTable){
@@ -364,6 +364,7 @@ app.get("/profit-info", async (req, res) => {
 app.get("/get-profit-table", async (req, res) => {
 
     const profitTable = await Profit.find({})
+    console.log(profitTable)
     res.json(profitTable);
 
 })
