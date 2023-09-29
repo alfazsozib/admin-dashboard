@@ -12,7 +12,7 @@ function Profit() {
     const [profits, setProfits] = useState('');
   
     const getProfitData=async()=>{
-        const data = await axios.get("http://localhost:8080/get-profit-table")
+        const data = await axios.get("http://149.28.238.50:8080/get-profit-table")
         setProfits(data.data);
     }
 
