@@ -1,14 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
-import { Modal } from "antd"
-// import { ToastContainer, toast } from "react-toastify";
-import toast, { Toaster } from 'react-hot-toast';
+import {React,useState} from 'react'
 
-import "./profit.css"
-import ProfitTable from './ProfitTable';
-
-
-function Profit() {
+function ProfitCal() {
     const [profits, setProfits] = useState('');
   
     const getProfitData=async()=>{
@@ -29,7 +21,7 @@ function Profit() {
             <table className='w-full rounded-lg'>
                 <thead>
                 <tr className='text-white rounded-lg'>
-                    <th className='border-2 border-[#2bdede] text-[14px] p-[4px]'>KEY</th>
+                    <th className='border-2 border-[#2bdede] text-[14px] p-[4px]'>ID</th>
                     <th className='border-2 border-[#2bdede] text-[14px] p-[4px]'>API BALANCE</th>
                     <th className='border-2 border-[#2bdede] text-[14px] p-[4px]'>PROFIT</th>
                     <th className='border-2 border-[#2bdede] text-[14px] p-[4px]'>DATE</th>
@@ -38,7 +30,7 @@ function Profit() {
                 <tbody>
                 {profits ? profits.map((user, index) => (
                     <tr key={index} className=''>
-                    <td className='text-center text-white border-2 border-[#2bdede] p-[1px]'> {user.key}</td>
+                    <td className='text-center text-white border-2 border-[#2bdede] p-[1px]'> {user._id}</td>
                     <td className='text-center text-white border-2 border-[#2bdede] p-[1px]'>{user.balance}</td>
                     <td className='text-center text-white border-2 border-[#2bdede] p-[1px]'>{user.profit}</td>
                     <td className='text-center text-white border-2 border-[#2bdede] p-[1px]'>{user.date}</td>
@@ -54,4 +46,4 @@ function Profit() {
     )
 }
 
-export default Profit
+export default ProfitCal

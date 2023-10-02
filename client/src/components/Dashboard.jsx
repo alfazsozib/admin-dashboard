@@ -269,8 +269,8 @@ function Dashboard() {
 
           <div className='edit--section w-[100%]'>
             <div className='w-[100%] h-80  p-6'>
-            <div style={{ maxHeight: alldata && alldata.length > 5 ? '300px' : 'auto', overflowY: 'auto' }}>
-              <div className='bg-[#141313af] flex flex-col gap-2 p-4 rounded-lg'>
+            <div className='' style={{ maxHeight: alldata && alldata.length > 5 ? '300px' : 'auto', overflowY: 'auto'}}>
+              <div className=' flex flex-col gap-2 p-4 rounded-lg'>
                 {alldata ? alldata.map((item) =>
                   <>
                     <Modal
@@ -281,7 +281,6 @@ function Dashboard() {
                       okButtonProps={{ disabled: false, danger: true }}
                       cancelButtonProps={{ disabled: false }}
                       bodyStyle={{ backgroundColor: "#0F464F" }}
-
                     >
                       <div className='p-10'>
                         <div className='grid grid-cols-2 gap-4'>
@@ -369,8 +368,6 @@ function Dashboard() {
                             )): <p className='text-white text-lg'>Loading ....</p>}
                           </tbody>
                         </table>
-                   
-                
               </div>
               </div>
             </div>
