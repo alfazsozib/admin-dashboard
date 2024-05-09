@@ -218,10 +218,11 @@ app.get("/view-json-4", async (req, res) => {
     console.log(dataURI)
     const base64Data = dataURI.split(",")[1];
     const jsonData = Buffer.from(base64Data, "base64").toString("utf-8");
-    const parsedData = JSON.parse(jsonData);
+    const fixedJsonData = jsonData.replace(/\b0+(\d+)/g, '$1');
+    const parsedData = JSON.parse(fixedJsonData);
     fs.writeFileSync("parsed_data.json", JSON.stringify(parsedData, null, 2));
     res.json(parsedData);
-  } else {
+  } else {  
     res.status(404).send("JSON data not found.");
   }
 })
